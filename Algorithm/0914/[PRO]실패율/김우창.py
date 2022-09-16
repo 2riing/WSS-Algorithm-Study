@@ -15,7 +15,7 @@ def solution(N, stages):
             ans.append(pp / sum(p))
             p[i] = 0
         else:
-            ans.append(0)
+            ans.append(0.)
     print(ans)
 
     for i in range(N):
