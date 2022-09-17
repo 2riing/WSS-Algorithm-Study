@@ -5,14 +5,14 @@ records = [["05:34 5961 IN", "06:00 0000 IN", "06:34 0000 OUT", "07:59 5961 OUT"
 
 def solution(fees, records):
 
-    basic_minute = fees[0]
-    basic_won = fees[1]
-    unit_minute = fees[2]
-    unit_won = fees[3]
+    basic_minute = fees[0] # 기본 시간
+    basic_won = fees[1]    # 기본 요금
+    unit_minute = fees[2]  # 단위 시간
+    unit_won = fees[3]     # 단위 요금
 
     records2 = []
     car_num = []
-    for record in records:
+    for record in records: # 시간 처리 작업
         stack = []
         stack.append(int(record[0:2])*60 + int(record[3:5]))
         stack.append(record[6:10])
@@ -40,49 +40,29 @@ def solution(fees, records):
                     car_num[i][2] += (record[0] - car_num[i][1])
                     car_num[i][3] = -1
                     break
-    for i in car_num: # 출차 안한거 23:59 계산
-        if i[3] == 1:
-            i[2] += 1439 - i[1]
-        i[0] = int(i[0]) # 차 번호 int화  = 나중에 오름차순 계산
-        i[3] = 0   # 차 숫자값 더해줄거
-        if i[2] <= basic_minute:  # 계산작업 시작
-            i[3] = basic_won
+    for car in car_num: # 출차 안한거 23:59 계산
+        if car[3] == 1:
+            car[2] += 1439 - car[1]
+        car[0] = int(car[0]) # 차 번호 int화  = 나중에 오름차순 계산
+        car[3] = 0   # 차 숫자값 더해줄거
+        if car[2] <= basic_minute:  # 계산작업 시작
+            car[3] = basic_won
         else:
-            over_time = i[2] - basic_minute  # 기본요금 초과 시간
+            over_time = car[2] - basic_minute  # 기본요금 초과 시간
             over_time_a = over_time / unit_minute
             over_time_b = over_time // unit_minute
             if over_time_b-over_time_a < 0:
                 over_time_b += 1
-            i[3] = (unit_won * over_time_b) + basic_won
+            car[3] = (unit_won * over_time_b) + basic_won
 
-    for i in range(len(car_num)):
+    for i in range(len(car_num)): # 차 돌리기
         min_num = [10000,0]
-        for j in range(len(car_num)):
+        for j in range(len(car_num)): # 오름차순으로 차 번호 작은거에 값 넣어주기
             if car_num[j][0] < min_num[0]:
                 min_num[0] = car_num[j][0]
                 min_num[1] = j
         answer.append(car_num[min_num[1]][3])
         car_num[min_num[1]][0] = 10000
-    
-
-
-
-
-
-    print(car_num)
-                    # if car_num[i] <= basic_minute:
-                    #     answer[i] += basic_won
-                    # else:
-                    #     over_time = car_num[i] - basic_minute
-                    #     answer[i] += _basic_won +
-
-                    #     basic_minute = fees[0]
-                    #     basic_won = fees[1]
-                    #     unit_minute = fees[2]
-                    #     unit_won = fees[3]
-
-
-
 
     return answer
 
