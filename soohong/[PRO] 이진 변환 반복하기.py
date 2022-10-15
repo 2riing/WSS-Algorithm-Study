@@ -1,5 +1,4 @@
 def solution(s):
-    answer = []
     zero = 0
     cnt = 0
     for _ in range(5):
