@@ -1,12 +1,12 @@
 def solution(brown, yellow):
     answer = []
     n = brown + yellow
-    yak = []
+    yaksu = []
     for i in range(3, n // 2):
         if n % i == 0:
-            yak.append(i)
-    for i in yak:
-        if (n // i) in yak:
+            yaksu.append(i)
+    for i in yaksu:
+        if (n // i) in yaksu:
 
             if i ** 2 == n:
                 answer.append(i)
