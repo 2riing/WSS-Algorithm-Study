@@ -1,13 +1,11 @@
 def solution(s):
-    answer = -1
-
-    while True:
-        c = 0
-        if s[c] == s[c + 1]:
-            s = s[0:c] + s[c + 2:]
-        break
+    answer = 0
+    stack = [0]
+    for i in range(len(s)):
+        if s[i] != stack[-1]:
+            stack.append(s[i])
+        else:
+            stack.pop()
+    if stack==[0]:
+        answer += 1
     return answer
-
-s = 'baabaa'
-a = solution(s)
-print(a)
